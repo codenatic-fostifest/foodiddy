@@ -5,9 +5,15 @@ import Logo from '@/components/common/logo'
 import StatusBarDark from '@/components/common/status-bar'
 import CustomBotton from '@/components/common/custom-button'
 import { router } from 'expo-router'
+import { GlobalContextType, useGlobalContext } from '@/context/global-provider'
+import OpenScreen from '@/components/common/open-screen'
 
 
 const Index = () => {
+  const {isLoading} = useGlobalContext() as GlobalContextType
+
+  if (isLoading) return <OpenScreen/>
+
   return (
     <SafeAreaView>
         <ScrollView contentContainerStyle={{ height : "100%" }} className='px-4'>

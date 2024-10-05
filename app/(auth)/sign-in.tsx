@@ -4,6 +4,7 @@ import Logo from '@/components/common/logo'
 import FormField from '@/components/common/form-field'
 import CustomButton from '@/components/common/custom-button'
 import { Link, router } from 'expo-router'
+import { supabase } from '@/utils/supabase'
 // import { getCurrentUser, signIn } from '@/services/users'
 // import { GlobalContextType, useGlobalContext } from '@/context/global-provider'
 
@@ -17,25 +18,28 @@ const SignIn = () => {
 
     const [isSubmitting, setSubmitting] = useState(false)
 
-    // const submit = async () => {
-    //     if (!form.email || !form.password) {
-    //         Alert.alert('Error', 'Please fill in all the fields')
-    //     }
+    const submit = async () => {
+        if (!form.email || !form.password) {
+            Alert.alert('Error', 'Please fill in all the fields')
+        }
 
-    //     setSubmitting(true)
+        setSubmitting(true)
 
-    //     try {
-    //         await signIn(form.email, form.password)
-    //         const result = await getCurrentUser()
-    //         setUser(result)
-    //         setLoggedIn(true)
-    //         router.replace('/home')
-    //     } catch (error:any) {
-    //         Alert.alert('Error', error.message)
-    //     } finally {
-    //         setSubmitting(false)
-    //     }
-    // }
+        try {
+            let { data : {session}, error } = await supabase.auth.signInWithPassword({
+                email: form.email,
+                password: form.password
+              })
+            
+            if (error) throw new Error(error.message)
+            if (session) router.replace("/home")
+
+        } catch (error:any) {
+            Alert.alert('Error', error.message)
+        } finally {
+            setSubmitting(false)
+        }
+    }
 
     return (
         <SafeAreaView className='h-full'>
@@ -57,7 +61,7 @@ const SignIn = () => {
                         />
                         <CustomButton
                             title='Sign In'
-                            // handlePress={submit}
+                            handlePress={submit}
                             isLoading={isSubmitting}
                             otherStyles='my-6'
                         />
