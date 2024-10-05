@@ -7,6 +7,10 @@
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
+    "assetBundlePatterns": ["**/*"],
+    "fonts": [
+      "./assets/fonts/AfacadFlux-Black.ttf"
+    ],
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
