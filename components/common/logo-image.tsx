@@ -1,8 +1,9 @@
-import { Image } from "react-native"
+import { Image, ImageProps } from "react-native"
 
-const LogoImage = ({className = "w-[85px] h-[60px]"} : { className? : string }) => {
+
+const LogoImage = ({...props}: ImageProps) => {
   return (
-    <Image className={`${className} bg-cover`} source={require("@/assets/images/logo-foodiddy.png")}/>
+    <Image source={require("@/assets/images/logo-foodiddy.png")} {...props}/>
   )
 }
 

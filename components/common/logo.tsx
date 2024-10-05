@@ -6,7 +6,7 @@ import LogoText from './logo-text'
 const Logo = ({ otherSyle } : { otherSyle? : string }) => {
   return (
     <View className={`mx-auto items-center ${otherSyle}`}>
-        <LogoImage/>
+        <LogoImage className='w-[120px] h-[90px]'/>
         <LogoText/>
     </View>
   )
