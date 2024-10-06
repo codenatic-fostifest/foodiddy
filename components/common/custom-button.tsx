@@ -6,9 +6,10 @@ interface ButtonType {
     isLoading? : boolean;
     handlePress? : () => void;
     otherStyles? : string;
+    otherTextStyle? : string;
 }
 
-const CustomBotton = ({ title, handlePress, isLoading, otherStyles } : ButtonType) => {
+const CustomBotton = ({ title, handlePress, isLoading, otherStyles, otherTextStyle } : ButtonType) => {
   return (
     <TouchableOpacity
         onPress={handlePress}
@@ -16,7 +17,7 @@ const CustomBotton = ({ title, handlePress, isLoading, otherStyles } : ButtonTyp
         activeOpacity={0.9}
     >
         {isLoading?<ActivityIndicator size={"large"} color="white"/>:
-        <Text style={{ fontFamily : "flux-black" }} className='text-white text-center text-2xl'>
+        <Text style={{ fontFamily : "flux-black" }} className={`text-white text-center text-2xl ${otherTextStyle}`}>
             {title}
         </Text>}
     </TouchableOpacity>
