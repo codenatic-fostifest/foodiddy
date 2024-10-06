@@ -5,11 +5,8 @@ import FormField from '@/components/common/form-field'
 import CustomButton from '@/components/common/custom-button'
 import { Link, router } from 'expo-router'
 import { supabase } from '@/utils/supabase'
-// import { getCurrentUser, signIn } from '@/services/users'
-// import { GlobalContextType, useGlobalContext } from '@/context/global-provider'
 
 const SignIn = () => {
-    // const { setLoggedIn, setUser } = useGlobalContext() as GlobalContextType
 
     const [form, setForm] = useState({
         email : "",
