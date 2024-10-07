@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, Alert } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import FormField from '@/components/common/form-field'
 import FileField from '@/components/post/file-field'
@@ -7,19 +7,21 @@ import { getDocumentAsync } from 'expo-document-picker'
 import CustomButton from '@/components/common/custom-button'
 import { GlobalContextType, useGlobalContext } from '@/context/global-provider'
 import { PostFormType } from '@/types/post'
+import axios from 'axios'
+import { AnalyzedType } from '@/types/analyze'
 
 
 
 const Post = () => {
   const { user } = useGlobalContext() as GlobalContextType
   const [uploading, setUploading] = useState(false)
+  const [analyze, setAnalyze] = useState<AnalyzedType|null>(null)
 
   const [form, setForm] = useState<PostFormType>({
     title : '',
-    image : null,
+    img : null,
     ingr : "",
-    prep : "",
-    userId : undefined
+    prep : ""
   })
 
   const openPicker = async () => {
@@ -27,12 +29,12 @@ const Post = () => {
       type : ["image/jpg", "image/jpeg", "image/png"]
     })
     if (!result.canceled) {
-      setForm({...form, image : result.assets[0]})
+      setForm({...form, img : result.assets[0]})
     }
   }
 
   const submit = async () => {
-    if (!form.ingr || !form.prep || !form.title || !form.image) {
+    if (!form.ingr || !form.prep || !form.title || !form.img) {
         Alert.alert('Error', 'Please fill in all the fields')
     }
 
@@ -40,7 +42,7 @@ const Post = () => {
     const preparationsArray = form.prep.split(/[\n,]+/).map(item => item.trim()).filter(Boolean);
 
     const updatedForm = {
-      ...form,
+      title : form.title,
       ingr: ingredientsArray,
       prep: preparationsArray,
     };
@@ -49,24 +51,45 @@ const Post = () => {
     setUploading(true)
 
     try {
-      console.log(updatedForm)
-        // const result = await createVideo({...form, userId : user?.$id})
-        // setForm({
-        //   title : '',
-        //   video : null,
-        //   thumbnail : null,
-        //   prompt : '',
-        //   userId : undefined
-        // })
-        // if (result) {
-        //   Alert.alert('Succes', 'Video has been published')
-        // }
+      const response = await axios.post<AnalyzedType>(
+        'https://api.edamam.com/api/nutrition-details',
+        updatedForm,
+        {
+          params : {
+            app_id : "5150fe85",
+            app_key : "bfe8574843f1e6ea6498ef13f65de871"
+          }
+        }
+      )
+      const data = response.data
+      setAnalyze({
+        dietLables : data.dietLables,
+        cautions : data.cautions,
+        healthLabels : data.healthLabels,
+        totalNutrients : {
+          CHOCDF : data.totalNutrients.CHOCDF,
+          CHOLE : data.totalNutrients.CHOLE,
+          ENERC_KCAL : data.totalNutrients.ENERC_KCAL,
+          FAT : data.totalNutrients.FAT,
+          SUGAR : data.totalNutrients.SUGAR,
+          PROCNT : data.totalNutrients.PROCNT,
+          NA : data.totalNutrients.NA,
+        }
+      })
     } catch (error:any) {
+      if (error.response.data.error === "low_quality") {
+        Alert.alert('Error', "Low quality input. Please clarify.")
+      } else {
         Alert.alert('Error', error.message)
+      }
     } finally {
         setUploading(false)
     }
   }
+
+  useEffect(()=>{
+    console.log(analyze)
+  },[analyze])
 
   return (
     <SafeAreaView className='h-full'>
@@ -82,7 +105,7 @@ const Post = () => {
           <FileField 
             title='Image'
             handleChangeFile={openPicker}
-            asset={form.image}
+            asset={form.img}
           />
           <FormField
             title='Ingredients'
