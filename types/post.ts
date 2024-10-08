@@ -6,3 +6,10 @@ export interface PostFormType {
     ingr : string;
     prep : string;
 }
+
+export interface PostParseType {
+    title : string;
+    img : DocumentPickerAsset;
+    ingr : string[];
+    prep : string[];
+}

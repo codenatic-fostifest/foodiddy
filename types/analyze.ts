@@ -1,3 +1,5 @@
+import { PostFormType, PostParseType } from "./post";
+
 interface NutrientFormat {
     label : string;
     quantity : number;
@@ -15,8 +17,13 @@ interface Nutrients {
 }
 
 export interface AnalyzedType {
-    dietLables : string[];
+    dietLabels : string[];
     healthLabels : string[];
     cautions : string[];
     totalNutrients : Nutrients
+}
+
+export interface AnalysisResultType {
+    post : PostParseType;
+    analysResult : AnalyzedType;
 }

@@ -9,14 +9,13 @@ import { GlobalContextType, useGlobalContext } from '@/context/global-provider'
 import { PostFormType } from '@/types/post'
 import axios from 'axios'
 import { AnalyzedType } from '@/types/analyze'
+import { router } from 'expo-router'
 
 
 
 const Post = () => {
   const { user } = useGlobalContext() as GlobalContextType
   const [uploading, setUploading] = useState(false)
-  const [analyze, setAnalyze] = useState<AnalyzedType|null>(null)
-
   const [form, setForm] = useState<PostFormType>({
     title : '',
     img : null,
@@ -36,6 +35,7 @@ const Post = () => {
   const submit = async () => {
     if (!form.ingr || !form.prep || !form.title || !form.img) {
         Alert.alert('Error', 'Please fill in all the fields')
+        return
     }
 
     const ingredientsArray = form.ingr.split(/[\n,]+/).map(item => item.trim()).filter(Boolean);
@@ -62,20 +62,29 @@ const Post = () => {
         }
       )
       const data = response.data
-      setAnalyze({
-        dietLables : data.dietLables,
-        cautions : data.cautions,
-        healthLabels : data.healthLabels,
-        totalNutrients : {
-          CHOCDF : data.totalNutrients.CHOCDF,
-          CHOLE : data.totalNutrients.CHOLE,
-          ENERC_KCAL : data.totalNutrients.ENERC_KCAL,
-          FAT : data.totalNutrients.FAT,
-          SUGAR : data.totalNutrients.SUGAR,
-          PROCNT : data.totalNutrients.PROCNT,
-          NA : data.totalNutrients.NA,
+      const foodData = {
+        post : {
+          ...form,
+          ingr: ingredientsArray,
+          prep: preparationsArray,
+        },
+        analysResult : {
+          dietLabels : data.dietLabels,
+          cautions : data.cautions,
+          healthLabels : data.healthLabels,
+          totalNutrients : {
+            CHOCDF : data.totalNutrients.CHOCDF,
+            CHOLE : data.totalNutrients.CHOLE,
+            ENERC_KCAL : data.totalNutrients.ENERC_KCAL,
+            FAT : data.totalNutrients.FAT,
+            SUGAR : data.totalNutrients.SUGAR,
+            PROCNT : data.totalNutrients.PROCNT,
+            NA : data.totalNutrients.NA,
+          }
         }
-      })
+      }
+      const foodDataString = encodeURIComponent(JSON.stringify(foodData));
+      router.push(`/result/${foodDataString}`)
     } catch (error:any) {
       if (error.response.data.error === "low_quality") {
         Alert.alert('Error', "Low quality input. Please clarify.")
@@ -87,14 +96,10 @@ const Post = () => {
     }
   }
 
-  useEffect(()=>{
-    console.log(analyze)
-  },[analyze])
-
   return (
     <SafeAreaView className='h-full'>
       <ScrollView className='px-4'>
-        <Text className='text-primary text-2xl mt-5' style={{ fontFamily : 'flux-black' }}>Upload Your Recipes</Text>
+        <Text className='text-primary text-2xl mt-5' style={{ fontFamily : 'flux-black' }}>Evaluate Your Recipe</Text>
         <View className='mt-2'>
           <FormField
             title='Title'
@@ -125,8 +130,7 @@ const Post = () => {
             numberOfLines={4}
             style={{ textAlignVertical : "top" }}
           />
-          <CustomButton handlePress={submit} title='Analyze' otherTextStyle='text-primary' otherStyles='mb-2 mt-4 bg-transparent border-[2.5px] border-primary' isLoading={uploading}/>
-          <CustomButton handlePress={submit} title='Publish' otherStyles='mt-2 mb-4' isLoading={uploading}/>
+          <CustomButton handlePress={submit} title='Analysis' otherStyles='mt-2 mb-4' isLoading={uploading}/>
         </View>
       </ScrollView>
     </SafeAreaView>
