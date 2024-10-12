@@ -20,10 +20,11 @@ export interface AnalyzedType {
     dietLabels : string[];
     healthLabels : string[];
     cautions : string[];
-    totalNutrients : Nutrients
+    totalNutrients : Nutrients;
 }
 
 export interface AnalysisResultType {
+    category? : string;
     post : PostParseType;
     analysResult : AnalyzedType;
 }

@@ -25,7 +25,7 @@ const Post = () => {
 
   const openPicker = async () => {
     const result = await getDocumentAsync({
-      type : ["image/jpg", "image/jpeg", "image/png"]
+      type : ["image/jpg", "image/jpeg"]
     })
     if (!result.canceled) {
       setForm({...form, img : result.assets[0]})
@@ -63,6 +63,7 @@ const Post = () => {
       )
       const data = response.data
       const foodData = {
+        category : "insert",
         post : {
           ...form,
           ingr: ingredientsArray,
@@ -83,6 +84,12 @@ const Post = () => {
           }
         }
       }
+      setForm({
+        title : '',
+        img : null,
+        ingr : "",
+        prep : ""
+      })
       const foodDataString = encodeURIComponent(JSON.stringify(foodData));
       router.push(`/result/${foodDataString}`)
     } catch (error:any) {

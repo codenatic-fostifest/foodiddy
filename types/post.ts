@@ -12,4 +12,6 @@ export interface PostParseType {
     img : DocumentPickerAsset;
     ingr : string[];
     prep : string[];
+    id? : string;
+    user_id? : string;
 }
