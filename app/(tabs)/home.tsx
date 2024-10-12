@@ -38,7 +38,7 @@ const Home = () => {
           </View>
         )}
         data={posts}
-        renderItem={({ item }) => <ImageCard id={item.id} user_id={item.user_id} prep={item.prep} ingr={item.ingr} analysis_id={item.analysis_id} img_url={item.img_url} name={item.name} title={item.title}/>}
+        renderItem={({ item }) => <ImageCard totalLikes={item.totalLikes} hasLiked={item.hasLiked} sum={item.sum} id={item.id} user_id={item.user_id} prep={item.prep} ingr={item.ingr} analysis_id={item.analysis_id} img_url={item.img_url} name={item.name} title={item.title}/>}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
       />
       }

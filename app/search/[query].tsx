@@ -21,7 +21,7 @@ const Search = () => {
 
     return (
         <SafeAreaView className='h-full'>
-        {/* {isLoading?<ActivityIndicator className='m-auto' size={"large"} color={primaryColor}/>: */}
+        {isLoading?<ActivityIndicator className='m-auto' size={"large"} color={primaryColor}/>:
             <FlatList
             className='px-4'
             ListHeaderComponent={()=>(
@@ -37,12 +37,12 @@ const Search = () => {
             </View>
             )}
             data={posts}
-            renderItem={({ item }) => <ImageCard id={item.id} user_id={item.user_id} prep={item.prep} ingr={item.ingr} analysis_id={item.analysis_id} img_url={item.img_url} name={item.name} title={item.title}/>}
+            renderItem={({ item }) => <ImageCard sum={item.sum} id={item.id} user_id={item.user_id} prep={item.prep} ingr={item.ingr} analysis_id={item.analysis_id} img_url={item.img_url} name={item.name} title={item.title}/>}
             ListEmptyComponent={()=>(
             <EmptyState message='Be the first to upload a food!' size={80}/>
             )}
         />
-        {/* } */}
+    }
         </SafeAreaView>
     )
 }

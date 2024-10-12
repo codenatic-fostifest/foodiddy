@@ -20,7 +20,8 @@ const Post = () => {
     title : '',
     img : null,
     ingr : "",
-    prep : ""
+    prep : "",
+    sum : ""
   })
 
   const openPicker = async () => {
@@ -33,7 +34,7 @@ const Post = () => {
   }
 
   const submit = async () => {
-    if (!form.ingr || !form.prep || !form.title || !form.img) {
+    if (!form.ingr || !form.prep || !form.title || !form.img || !form.sum) {
         Alert.alert('Error', 'Please fill in all the fields')
         return
     }
@@ -88,7 +89,8 @@ const Post = () => {
         title : '',
         img : null,
         ingr : "",
-        prep : ""
+        prep : "",
+        sum : ""
       })
       const foodDataString = encodeURIComponent(JSON.stringify(foodData));
       router.push(`/result/${foodDataString}`)
@@ -118,6 +120,15 @@ const Post = () => {
             title='Image'
             handleChangeFile={openPicker}
             asset={form.img}
+          />
+          <FormField
+            title='Description'
+            placeholder='Write your recipe description here...'
+            handleChangeText={(e : string) => setForm({...form, sum : e})}
+            value={form.sum}
+            multiline
+            numberOfLines={4}
+            style={{ textAlignVertical : "top" }}
           />
           <FormField
             title='Ingredients'

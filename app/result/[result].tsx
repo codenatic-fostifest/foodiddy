@@ -66,7 +66,7 @@ const Result = () => {
             const { data : dataPost, error : errorPost } = await supabase
             .from('posts')
             .insert([
-                { name : user?.name, title : post.title, ingr : post.ingr, prep : post.prep, img_url : url, user_id : user?.sub, analysis_id : dataAnalys[0].id }
+                { name : user?.name, title : post.title, ingr : post.ingr, prep : post.prep, img_url : url, user_id : user?.sub, analysis_id : dataAnalys[0].id, sum : post.sum }
             ])
             .select()
             if (errorPost) throw new Error(errorPost.message)
@@ -79,16 +79,27 @@ const Result = () => {
         }
         
     }
-
+    
     const handleDelete = async () => {
         setLoading(true)
+        const getFilePathFromUrl = (url : string) => {
+            const parts = url.split('/'); 
+            return parts[parts.length - 1];
+          };
+          
+        const filePath = getFilePathFromUrl(post.img.uri);
         try {
+            const { data, error : errorStorage } = await supabase.storage
+            .from('image') 
+            .remove([filePath]);
+
             const { error } = await supabase
             .from('posts')
             .delete()
             .eq('id', post.id)
             
             if (error) throw new Error(error.message)
+            if (errorStorage) throw new Error(errorStorage.message)
             
             Alert.alert("Seccess", "The post was deleted successfully.")
             router.back()
@@ -131,6 +142,10 @@ const Result = () => {
                                 data={post.ingr}
                                 renderItem={({ item, index }) => <Text style={{ fontFamily : 'flux-regular' }} className='text-base'>{`${item}`}</Text>}
                             />
+                        </View>
+                        <Text style={{ fontFamily : 'flux-black' }} className='text-xl mt-2  mb-1'>Description</Text>
+                        <View className='bg-gray-300 p-2'>
+                            <Text className='text-base' style={{ fontFamily : 'flux-regular' }}>{post.sum}</Text>
                         </View>
                         <Text style={{ fontFamily : 'flux-black' }} className='text-xl mt-2  mb-1'>Preparations</Text>
                         <View className='bg-gray-300 p-2'>

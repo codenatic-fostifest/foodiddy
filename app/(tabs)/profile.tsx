@@ -17,7 +17,7 @@ const ProfilePage = () => {
   const [refreshing, setRefreshing] = useState(false)
 
   const { posts, isLoading, getProfileList} = usePostsProfile(user?.sub)
-
+  
   const logOut = async () => {
     let { error } = await supabase.auth.signOut()
     if (error) return
@@ -43,13 +43,21 @@ const ProfilePage = () => {
             <View className='items-center'>
               {user && <Profile style='w-16 h-16'/>}
               <Text className='text-primary my-3 text-2xl text-center' style={{ fontFamily : 'flux-black' }}>{user?.name}</Text>
-              <Text className='text-xl text-center' style={{ fontFamily : 'flux-black' }}>{posts?.length}</Text>
-              <Text className='text-gray-500 text-center' style={{ fontFamily : 'flux-black' }}>Post</Text>
+              <View className='flex-row gap-x-4 items-center'>
+                <View>
+                  <Text className='text-xl text-center' style={{ fontFamily : 'flux-black' }}>{posts?.length}</Text>
+                  <Text className='text-gray-500 text-center' style={{ fontFamily : 'flux-black' }}>Post</Text>
+                </View>
+                <View>
+                  <Text className='text-xl text-center' style={{ fontFamily : 'flux-black' }}>{posts[0]?posts[0].totalLikes:"0"}</Text>
+                  <Text className='text-gray-500 text-center' style={{ fontFamily : 'flux-black' }}>Likes</Text>
+                </View>
+              </View>
             </View>
           </View>
         )}
         data={posts}
-        renderItem={({ item }) => <ImageCard id={item.id} user_id={item.user_id} prep={item.prep} ingr={item.ingr} analysis_id={item.analysis_id} img_url={item.img_url} name={item.name} title={item.title}/>}
+        renderItem={({ item }) => <ImageCard sum={item.sum} id={item.id} user_id={item.user_id} prep={item.prep} ingr={item.ingr} analysis_id={item.analysis_id} img_url={item.img_url} name={item.name} title={item.title}/>}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
         ListEmptyComponent={()=>(
           <EmptyState message='You haven&apos;t uploaded any food yet.' size={80}/>

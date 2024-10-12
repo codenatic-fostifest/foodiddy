@@ -5,6 +5,7 @@ export interface PostFormType {
     img : DocumentPickerAsset | null;
     ingr : string;
     prep : string;
+    sum : string;
 }
 
 export interface PostParseType {
@@ -14,4 +15,5 @@ export interface PostParseType {
     prep : string[];
     id? : string;
     user_id? : string;
+    sum : string;
 }
