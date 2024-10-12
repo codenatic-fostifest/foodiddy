@@ -1,50 +1,31 @@
-# Welcome to your Expo app 👋
+# Foodiddy
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+<img src="https://dl.imgdrop.io/file/aed8b140-8472-4813-922b-7ce35ef93c9e/2024/10/11/logo-foodiddy826dcb7685ae17f9.png" width="125">
 
-## Get started
+Tema: Good Health and Well-being
 
-1. Install dependencies
+*Foodiddy* adalah aplikasi berbagi resep makanan yang memungkinkan pengguna untuk mengunggah resep dan mendapatkan analisis nutrisi dari setiap bahan makanan yang digunakan. Aplikasi ini memudahkan pengguna dalam memahami komposisi nutrisi dari resep yang mereka buat dan bagikan.
 
-   ```bash
-   npm install
-   ```
+## Fitur Utama
 
-2. Start the app
+- *Berbagi Resep*: Pengguna dapat membuat dan membagikan resep makanan mereka dengan komunitas Foodiddy.
+- *Analisis Nutrisi*: Setiap bahan makanan dalam resep akan dianalisis menggunakan Edamam's Nutrition Analysis API untuk memberikan informasi nutrisi yang detail.
+- *Autentikasi* : Sign In, Sign Up, dan Sign Out
 
-   ```bash
-    npx expo start
-   ```
+## Tech Stack
 
-In the output, you'll find options to open the app in a
+*Client:* React Native, Expo, Nativewind
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+*Server:* Edamam API, Supabase
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Download
 
-## Get a fresh project
+[download disini](https://drive.google.com/drive/folders/1nsfjc-PvBle2m9kqxFgICXNZkNPQl8P2?usp=sharing)
 
-When you're ready, run:
+## Tim Pengembang
 
-```bash
-npm run reset-project
-```
+Dikembangkan oleh :
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- Dindin Imanuddin [@dindinmhs](https://www.github.com/dindinmhs)
+- Tedy Sukma Permana [@TedyPermana24](https://www.github.com/TedyPermana24)
+- Muhammad Iqbal Pasha Al Farabi [@miqbalps](https://www.github.com/miqbalps)

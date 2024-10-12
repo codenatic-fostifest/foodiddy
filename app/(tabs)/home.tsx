@@ -4,8 +4,7 @@ import SearchInput from '@/components/home/search-input'
 import { primaryColor } from '@/constants/Colors'
 import { GlobalContextType, useGlobalContext } from '@/context/global-provider'
 import usePosts from '@/hooks/usePostHome'
-import { supabase } from '@/utils/supabase'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { ActivityIndicator, Alert, FlatList, RefreshControl, Text, View} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -35,7 +34,7 @@ const Home = () => {
               </View>
               <LogoImage className='w-[70px] h-[50px]'/>
             </View>
-            <SearchInput placeholder='Search a video topic' otherStyles='my-4'/>
+            <SearchInput placeholder='Search your favorite dishes...' otherStyles='my-4'/>
           </View>
         )}
         data={posts}

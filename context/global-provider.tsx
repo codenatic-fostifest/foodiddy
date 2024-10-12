@@ -15,11 +15,12 @@ const GlobalContext = createContext<GlobalContextType|null>(null)
 
 
 const GlobalProvider = ({ children } : { children : React.ReactNode }) => {
-    const [isLoading, setLoading] = useState(true)
+    const [isLoading, setLoading] = useState(false)
     const [user, setUser] = useState<UserMetadata | UserType | null>(null)
     
     useEffect(()=>{
         const checkSession = async () => {
+            setLoading(true)
             supabase.auth.onAuthStateChange((_event, session) => {
                 if (session) {
                     setUser(session?.user.user_metadata)
@@ -29,6 +30,7 @@ const GlobalProvider = ({ children } : { children : React.ReactNode }) => {
                     router.replace("/")
                 }
             })
+            setLoading(false)
         }
         
         checkSession()

@@ -9,6 +9,7 @@ import { supabase } from '@/utils/supabase'
 import ImageCard from '@/components/home/image-card'
 import { primaryColor } from '@/constants/Colors'
 import usePostsProfile from '@/hooks/usePostProfile'
+import EmptyState from '@/components/common/empty-state'
 
 const ProfilePage = () => {
   const { user, setUser } = useGlobalContext() as GlobalContextType
@@ -50,9 +51,9 @@ const ProfilePage = () => {
         data={posts}
         renderItem={({ item }) => <ImageCard id={item.id} user_id={item.user_id} prep={item.prep} ingr={item.ingr} analysis_id={item.analysis_id} img_url={item.img_url} name={item.name} title={item.title}/>}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
-        // ListEmptyComponent={()=>(
-        //   <EmptyState message='Be the first one to upload a video' size={80}/>
-        // )}
+        ListEmptyComponent={()=>(
+          <EmptyState message='You haven&apos;t uploaded any food yet.' size={80}/>
+        )}
       />
       }
     </SafeAreaView>
